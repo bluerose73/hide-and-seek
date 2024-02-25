@@ -12,7 +12,7 @@
 // }
 async function Login(account, role) {
     console.log("calling login")
-    resp = await fetch('http://localhost:5000/Login', {
+    resp = await fetch('http://34.226.198.98:5000/Login', {
         method: "POST",
         headers: {
             Accept: "application.json",
@@ -20,7 +20,8 @@ async function Login(account, role) {
         },
         body: JSON.stringify({
             account: account,
-            role: role
+            role: role,
+            matchCode: matchCodeInput.value
         }),
         cache: "default"
     });
@@ -34,7 +35,7 @@ async function Login(account, role) {
 // return value: null
 async function CommitMove(account, position) {
     console.log("calling commit move");
-    resp = await fetch('http://localhost:5000/CommitMove', {
+    resp = await fetch('http://34.226.198.98:5000/CommitMove', {
         method: "POST",
         headers: {
             Accept: "application.json",
@@ -42,7 +43,8 @@ async function CommitMove(account, position) {
         },
         body: JSON.stringify({
             account: account,
-            position: position
+            position: position,
+            matchCode: matchCodeInput.value
         }),
         cache: "default"
     });
@@ -61,7 +63,7 @@ async function CommitMove(account, position) {
 async function GetOpponentPosition(account, turn) {
     console.log("calling get opponent position");
     do {
-        resp = await fetch('http://localhost:5000/GetOpponentPosition', {
+        resp = await fetch('http://34.226.198.98:5000/GetOpponentPosition', {
             method: "POST",
             headers: {
                 Accept: "application.json",
@@ -69,7 +71,8 @@ async function GetOpponentPosition(account, turn) {
             },
             body: JSON.stringify({
                 account: account,
-                turn: turn
+                turn: turn,
+                matchCode: matchCodeInput.value
             }),
             cache: "default"
         });
@@ -249,6 +252,7 @@ async function TakeTurn() {
 ////////////////////
 
 let accountInput = document.querySelector("#account");
+let matchCodeInput = document.querySelector("#matchCode");
 
 document.querySelector("#seeker").addEventListener("click", (ev) => {
     if (accountInput.value) {
