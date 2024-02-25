@@ -2,6 +2,8 @@
 //  Solana API  //
 //////////////////
 
+let server = 'http://localhost:5000/Login'
+
 // Logs in with current account and a selected role
 // role: "hider" or "seeker"
 // return value: {
@@ -12,7 +14,7 @@
 // }
 async function Login(account, role) {
     console.log("calling login")
-    resp = await fetch('http://localhost:5000/Login', {
+    resp = await fetch(server, {
         method: "POST",
         headers: {
             Accept: "application.json",
