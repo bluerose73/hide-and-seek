@@ -1,0 +1,12 @@
+.container canvas {
+  margin: auto;
+  display: block;
+}
+
+body {
+  margin: 0;
+}
+
+.scary-doors {
+  display: none;
+}

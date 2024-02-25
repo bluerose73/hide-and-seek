@@ -15,22 +15,16 @@ CORS(app)
 #   6 - 7 - 8
 # In a real game,
 # the map should be randomly generated
-doors = [[0, 1],
-         [0, 3],
-         [1, 0],
-         [1, 2],
-         [3, 4],
-         [3, 6],
-         [4, 3],
-         [4, 5],
-         [5, 4],
-         [5, 8],
-         [6, 3],
-         [6, 7],
-         [7, 6],
-         [7, 8],
-         [8, 5],
-         [8, 7]]
+doors = [[0, 1], [1, 0], 
+         [1, 2], [2, 1], 
+         [3, 4], [4, 3], 
+         [4, 5], [5, 4], 
+         [6, 7], [7, 6], 
+         [7, 8], [8, 7], 
+         [0, 3], [3, 0], 
+         [3, 6], [6, 3], 
+         [2, 5], [5, 2], 
+         [5, 8], [8, 5]]
 
 # history two players' moves
 history = []
@@ -40,6 +34,14 @@ roleToAccount = {
     "seeker": None,
     "hider": None
 }
+
+@app.post("/Reset")
+def Reset():
+    history = []
+    roleToAccount = {
+        "seeker": None,
+        "hider": None
+    }
 
 @app.post("/Login")
 def Login():
