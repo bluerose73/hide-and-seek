@@ -249,8 +249,6 @@ async function TakeTurn() {
 ////////////////////
 
 let accountInput = document.querySelector("#account");
-let publicKeyInput = document.querySelector("#publicKey");
-let secretKeyInput = document.querySelector("#secretKey");
 
 document.querySelector("#seeker").addEventListener("click", (ev) => {
     if (accountInput.value) {
@@ -266,50 +264,13 @@ document.querySelector("#hider").addEventListener("click", (ev) => {
 
 document.querySelector("#east").addEventListener("click", () => {
     EnterDoor(0);
-});
+})
 document.querySelector("#north").addEventListener("click", () => {
     EnterDoor(1);
-});
+})
 document.querySelector("#west").addEventListener("click", () => {
     EnterDoor(2);
-});
+})
 document.querySelector("#south").addEventListener("click", () => {
     EnterDoor(3);
-});
-
-document.querySelector("#testbutton").addEventListener("click", (ev) => {
-    TestSolana();
-});
-
-async function TestSolana() {
-    try {
-        let publicKey = new solanaWeb3.PublicKey(publicKeyInput.value);
-        let secretKey = Uint8Array.from(JSON.parse(secretKeyInput.value));
-        let keypair = solanaWeb3.Keypair.fromSecretKey(secretKey);
-        let connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl("devnet"));
-        let programId = new solanaWeb3.PublicKey("8bdjSahEDzuJ7DvVYB7Rj9sENHosWpEQS5rejKY5FTjL");
-        
-        let gameStartTransaction = new solanaWeb3.Transaction({
-            feePayer: publicKey
-        });
-        let keys = [{publickey: keypair.publicKey, isSigner: true, isWritable: true}];
-        let instruction = new solanaWeb3.TransactionInstruction({
-            keys: keys,
-            programId: programId,
-            data: Buffer.alloc(0),
-        });
-
-        gameStartTransaction = gameStartTransaction.add(instruction);
-        const signedTransaction = await solanaWeb3.sendAndConfirmTransaction(
-            connection,
-            transaction,
-            [keypair],
-            {
-                commitment: "confirmed",
-            }
-        );
-        console.log('Transaction successful:', signedTransaction);
-    } catch (error) {
-        console.error('Error interacting with program:', error);
-    }
-}
+})
