@@ -25,23 +25,40 @@ doors = [[0, 1], [1, 0],
          [3, 6], [6, 3], 
          [2, 5], [5, 2], 
          [5, 8], [8, 5]]
+rooms = []
+class Room:
+    def __init__(self, matchCode):
+        # history two players' moves
+        self.history = []
 
-# history two players' moves
-history = []
-
-# players' wallet account
-roleToAccount = {
-    "seeker": None,
-    "hider": None
-}
+        # players' wallet account
+        self.roleToAccount = {
+            "seeker": None,
+            "hider": None
+        }
+        self.matchCode = matchCode
 
 @app.post("/Login")
 def Login():
-    time.sleep(0.5) # simulate blockchain delay
-    
     payload = request.json
     role, account = payload["role"], payload["account"]
     assert role in ["hider", "seeker"]
+
+    matchCode = payload.get("matchCode", "HackIllinois")
+    curRoom = None
+    global rooms
+    for room in rooms:
+        if room.matchCode == matchCode:
+            curRoom = room
+    
+    if curRoom == None:
+        curRoom = Room(matchCode)
+        if len(rooms) > 10:
+            rooms = rooms[-10:]
+        rooms.append(curRoom)
+
+    roleToAccount = curRoom.roleToAccount
+    history = curRoom.history
 
     if roleToAccount[role] != None:
         return "role already taken", 400
@@ -62,11 +79,19 @@ def Login():
 
 @app.post("/GetOpponentPosition")
 def GetOpponentPosition():
-    time.sleep(0.5)
-
     payload = request.json
     turn, account = payload["turn"], payload["account"]
-    
+
+    matchCode = payload.get("matchCode", "HackIllinois")
+    curRoom = None
+    global rooms
+    for room in rooms:
+        if room.matchCode == matchCode:
+            curRoom = room
+    if curRoom == None:
+        return '"Room Not Found"', 404
+    history = curRoom.history
+
     opponent_moves = [move for move in history
                       if move["account"] != account]
     
@@ -77,17 +102,22 @@ def GetOpponentPosition():
 
 @app.post("/CommitMove")
 def CommitMove():
-    time.sleep(0.5)
-
     payload = request.json
     account, position = payload["account"], payload["position"]
 
-    # Verify if the move is legal
+    matchCode = payload.get("matchCode", "HackIllinois")
+    curRoom = None
+    global rooms
+    for room in rooms:
+        if room.matchCode == matchCode:
+            curRoom = room
+    if curRoom == None:
+        return '"Room Not Found"', 404
+    history = curRoom.history
+
+    # TODO: Verify if the move is legal
 
     history.append({"account": account, "position": position})
     app.logger.info("history = %s" % history)
-
-    # Check if the two meet,
-    # transfer money accordingly
 
     return '"committed"'
