@@ -382,20 +382,6 @@ function canvasCoord(e) {
   return [x, y];
 }
 
-window.addEventListener("beforeunload", function(e) {
-  if (turn > 0) {
-    fetch('http://localhost:5000/Reset', {
-        method: "POST",
-        headers: {
-            Accept: "application.json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({}),
-        cache: "default"
-    });
-  }
-});
-
 canvas.addEventListener('click', function(e) {
   var x = 0;
   var y = 0;
@@ -436,19 +422,13 @@ canvas.addEventListener('click', function(e) {
 }, false);
 
 function clickedTurnLeft(x, y) {
-  const x1 = -1.9;
-  const x2 = -1.65;
-  const y1 = -0.7;
-  const y2 = -0.3
-  return x1 <= x && x <= x2 && y1 <= y && y <= y2;
+  const x1 = -1.65;
+  return x <= x1;
 }
 
 function clickedTurnRight(x, y) {
   const x1 = 1.65;
-  const x2 = 1.9;
-  const y1 = -0.7;
-  const y2 = -0.3;
-  return x1 <= x && x <= x2 && y1 <= y && y <= y2;
+  return x1 <= x;
 }
 
 function clickedEnterLeftDoor(x, y) {
