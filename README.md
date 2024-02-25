@@ -28,3 +28,20 @@ flask --app backend run
 3. Open hider.html and seeker.html
 
 4. Input account number and select your role!
+
+   
+
+## Run game with local Flask server
+
+1. Restart Flask server
+**Always restart the server before the match**
+
+```bash
+flask --app backend run
+```
+
+2. Run game on browser
+
+Open or reload ```bash seeker.html``` and ```bash hider.html``` on your browser
+
+**Always open or reload exactly once**. If doing so more than once, go back to step 1.
