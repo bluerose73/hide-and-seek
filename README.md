@@ -6,7 +6,7 @@ Built at HackIllinois 2024.
 
 ## How to Play
 
-[Game Link](https://bluerose73.github.io/hide-and-seek/)
+Open index.html with your browser.
 
 Invite your friend and play hide-and-seek! Make sure two players enter the same match code.
 
