@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Board Visualization</title>
+  <style>
+    /* Add your CSS styles here */
+  </style>
+</head>
+<body>
+  <div id="board-container"></div>
+  <div id="out"></div>
+  <div id="doors-container"></div> <!-- Add a container for displaying doors -->
+  <script src="script.js"></script>
+  <script>
+    const width = 4;
+    const height = 4;
+
+    // Get the board container element
+    const boardContainer = document.getElementById("board-container");
+    // Get the doors container element
+    const doorsContainer = document.getElementById("doors-container");
+
+    const outcountatiner = document.getElementById("out");
+
+    // Generate the doors
+    const doors = generateDoors(width, height);
+
+    // Generate the board and append it to the container
+    boardContainer.innerHTML = visualizeBoard(width, height, doors);
+
+    // Output the doors information to the HTML file
+    doorsContainer.innerHTML = "<h2>Doors Information:</h2>";
+    doors.forEach(door => {
+      doorsContainer.innerHTML += `<p>Door between room ${door[0]} and room ${door[1]}</p>`;
+    });
+  </script>
+</body>
+</html>
