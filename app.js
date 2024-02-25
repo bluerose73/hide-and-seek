@@ -357,8 +357,18 @@ function quickDraw(imageId) {
 }
 
 function playAudio(audioId) {
-  // var audio = new Audio(`scary-footsteps/${audioId}.mp3`); // see howlerJS
-  // audio.play();
+  const audioFiles = [
+    "doors-panned-right",
+    "heavy-steps-panned-right",
+    "doors",
+    "doors",
+    "doors-panned-left",
+    "steps-panned-left",
+    "steps",
+    "steps-panned-right"
+  ]
+  var audio = new Audio(`scary-footsteps/${audioFiles[audioId]}.mp3`);
+  audio.play();
 }
 
 function canvasCoord(e) {
@@ -371,6 +381,20 @@ function canvasCoord(e) {
   y = (y * (3 / canvasHeight) - 1.5) * -1; // [0, canvasHeight] -> [1.5, -1.5]
   return [x, y];
 }
+
+window.addEventListener("beforeunload", function(e) {
+  if (turn > 0) {
+    fetch('http://localhost:5000/Reset', {
+        method: "POST",
+        headers: {
+            Accept: "application.json",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({}),
+        cache: "default"
+    });
+  }
+});
 
 canvas.addEventListener('click', function(e) {
   var x = 0;
@@ -550,7 +574,7 @@ async function transition() {
   
   
   /* render audio */
-  audioId = getOpponentDir();
+  const audioId = (getOpponentDir() - playerDir * 2 + 8) % 8; // playerDir * 2 = 2, oppDir = 7
   console.log(`Playing ${audioId}.mp3`);
   playAudio(audioId);
 }
@@ -569,7 +593,7 @@ function render() {
   quickDraw(imageId);
 
   /* render audio */
-  audioId = getOpponentDir();
+  const audioId = (getOpponentDir() - playerDir * 2 + 8) % 8; // playerDir * 2 = 2, oppDir = 7
   console.log(`Playing ${audioId}.mp3`);
   playAudio(audioId);
 }
