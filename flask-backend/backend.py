@@ -35,14 +35,6 @@ roleToAccount = {
     "hider": None
 }
 
-@app.post("/Reset")
-def Reset():
-    history = []
-    roleToAccount = {
-        "seeker": None,
-        "hider": None
-    }
-
 @app.post("/Login")
 def Login():
     time.sleep(0.5) # simulate blockchain delay
